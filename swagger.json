@@ -1,0 +1,318 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "flutterwave-api-endpoints ",
+    "description": "flutterwave-api-endpoints decs",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    },
+    "contact": {
+      "email": "joel@flutterwavego.com"
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API Endpoints for users in the system"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "consumes": [
+    "application/json",
+    "multipart/form-data",
+    "application/x-www-form-urlencoded"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/v1/auth/signup": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Register a New User in the system",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "f_name": {
+                    "type": "string",
+                    "description": "First name of User"
+                  },
+                  "l_name": {
+                    "type": "string",
+                    "description": "Last name of User"
+                  },
+                  "email": {
+                    "type": "string",
+                    "description": "Email of User"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "description": "phone of User"
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "country of User"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password of User"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "400": {
+            "description": "User Registration Validation Error"
+          },
+          "409": {
+            "description": "User already registered"
+          },
+          "201": {
+            "description": "New user is Registered"
+          }
+        }
+      }
+    },
+    "/api/v1/auth/signin": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Log In a Registered User",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "Email of Registered User"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password of Registered User"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "400": {
+            "description": "User Login Validation Error"
+          },
+          "404": {
+            "description": "User Email or Password is wrong"
+          },
+          "200": {
+            "description": "User Logged In"
+          }
+        }
+      }
+    },
+    "/api/v1/balance": {
+      "get": {
+        "summary": "Get User balance",
+        "tags": [
+          "Balance"
+        ],
+        "description": "Get User balance in wallet",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated/No token provided"
+          },
+          "400": {
+            "description": "Only Authenticated/Unauthorized or invalid token"
+          },
+          "404": {
+            "description": "No User found"
+          },
+          "200": {
+            "description": "User successfully gets balance"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add balance",
+        "tags": [
+          "Balance"
+        ],
+        "description": "Add balance new balance / update existing balance",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount you want to add to wallet"
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Users are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "201": {
+            "description": "New balance added"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    },
+    "/api/v1/bills": {
+      "get": {
+        "summary": "Get User bills records",
+        "tags": [
+          "Bills"
+        ],
+        "description": "Get User bills records",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated/No token provided"
+          },
+          "400": {
+            "description": "Only Authenticated/Unauthorized or invalid token"
+          },
+          "404": {
+            "description": "No User found"
+          },
+          "200": {
+            "description": "User successfully gets Bills record"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      },
+      "post": {
+        "summary": "Buy bills route",
+        "tags": [
+          "Bills"
+        ],
+        "description": "user bills route",
+        "requestBody": {
+          "description": "Input Data Format",
+          "content": {
+            "application/json": {
+              "schema": {
+                "properties": {
+                  "amount": {
+                    "type": "string",
+                    "description": "Amount you want to add to wallet"
+                  },
+                  "customer": {
+                    "type": "string",
+                    "description": "customer  phone number or card number "
+                  },
+                  "recurrence": {
+                    "type": "string",
+                    "description": " recurrence type"
+                  },
+                  "package_data": {
+                    "type": "string",
+                    "description": " package_data type eg  MTN 40 GB, DSTV Yanga "
+                  },
+                  "country": {
+                    "type": "string",
+                    "description": "customers country"
+                  },
+                  "biller_name": {
+                    "type": "string",
+                    "description": " biller_name "
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": " bill type"
+                  },
+                  "reference": {
+                    "type": "string",
+                    "description": "reference data "
+                  }
+                },
+                "type": "object"
+              }
+            }
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "401": {
+            "description": "Only Authenticated Users are Authorized"
+          },
+          "400": {
+            "description": "Validation Error"
+          },
+          "201": {
+            "description": "New balance added"
+          }
+        },
+        "security": [
+          {
+            "JWT": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "JWT": {
+        "type": "apiKey",
+        "description": "JWT token is received after registering\/login, input format: \"token \\<token\\>\"",
+        "name": "authorization",
+        "in": "header"
+      }
+    }
+  }
+}
