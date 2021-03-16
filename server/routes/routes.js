@@ -35,7 +35,7 @@ router.get('/settlements', SettlementsController.ping);
 router.get('/subaccounts', SubAccountsController.ping);
 router.get('/subscriptions', SubscriptionsController.ping);
 router.get('/tokenized-charges', TokenizedChargesController.ping);
-router.get('/transactions', SubAccountsController.ping);
+router.get('/transactions', TransactionsController.ping);
 router.get('/transfers', TransfersController.ping);
 router.get('/validate-charge', ValidateChargeController.ping);
 router.get('/virtual-cards', VirtualCardsController.ping);
